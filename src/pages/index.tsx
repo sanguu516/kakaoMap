@@ -1,13 +1,12 @@
 /** global kakao */
-import Script from "next/script";
-import Link from "next/link";
 import Map from "@/component/Map";
 import Markers from "@/component/Markers";
-import * as stores from "@/data/store_data.json";
 import { useState } from "react";
 import StoreBox from "@/component/StoreBox";
+import axios from "axios";
+import { StoreType } from "@/interface";
 
-export default function Home({ stores }: { stores: any }) {
+export default function Home({ stores }: { stores: StoreType[] }) {
   const [map, setMap] = useState(null);
   const [currentStore, setCurrentStore] = useState(null);
   return (
@@ -24,13 +23,10 @@ export default function Home({ stores }: { stores: any }) {
 }
 
 export async function getStaticProps() {
-  const stores = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/stores`
-  ).then((res) => res.json());
-
+  const stores = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/stores`);
   return {
     props: {
-      stores,
+      stores: stores.data,
     },
     revalidate: 60 * 60,
   };
