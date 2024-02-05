@@ -11,11 +11,11 @@ export default function Markers({
   storeDatas,
   setCurrentStore,
 }: MarkerProps) {
-  console.log(">>", storeDatas);
-
   const loadKakaMarkers = useCallback(() => {
+    console.log("ed>>", storeDatas);
+
     if (map) {
-      storeDatas?.map((store: any) => {
+      storeDatas.map((store: any) => {
         const imageSrc = store?.category
             ? `/images/markers/${store?.category}.png`
             : "/images/markers/default.png",
