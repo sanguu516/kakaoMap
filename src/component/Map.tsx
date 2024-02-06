@@ -10,16 +10,25 @@ declare global {
 
 interface MapProps {
   setMap: Dispatch<SetStateAction<any>>;
+  lat?: string | null;
+  lng?: string | null;
+  zoom?: number | null;
 }
 const EDFAULT_LAT = 37.497625203;
 const DEFAULT_LNG = 127.03088379;
-export default function Map({ setMap }: MapProps) {
+
+const DEFAULT_ZOOM = 3;
+
+export default function Map({ setMap, lat, lng, zoom }: MapProps) {
   const loadKakaoMap = () => {
     window.kakao.maps.load(() => {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(EDFAULT_LAT, DEFAULT_LNG),
-        level: 3,
+        center: new window.kakao.maps.LatLng(
+          lat ?? EDFAULT_LAT,
+          lng ?? DEFAULT_LNG
+        ),
+        level: zoom ?? 3,
       };
       const map = new window.kakao.maps.Map(container, options);
 

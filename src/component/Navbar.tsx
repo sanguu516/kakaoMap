@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar">
+      <div className="navbar z-100">
         <Link href="/" className="navbar__logo">
           nextmap
         </Link>
