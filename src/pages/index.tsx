@@ -7,17 +7,12 @@ import axios from "axios";
 import { StoreType } from "@/interface";
 
 export default function Home({ stores }: { stores: StoreType[] }) {
-  const [map, setMap] = useState(null);
   const [currentStore, setCurrentStore] = useState(null);
   return (
     <>
-      <Map setMap={setMap} />
-      <Markers
-        storeDatas={stores}
-        map={map}
-        setCurrentStore={setCurrentStore}
-      />
-      <StoreBox store={currentStore} setStore={setCurrentStore} />
+      <Map />
+      <Markers storeDatas={stores} />
+      <StoreBox />
     </>
   );
 }

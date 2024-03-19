@@ -1,19 +1,17 @@
+import { currentStoreState, locationState, mapState } from "@/atom";
 import { StoreType } from "@/interface";
 import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 interface MarkerProps {
-  map: any;
   storeDatas: any;
-  setCurrentStore: Dispatch<SetStateAction<any>>;
 }
-export default function Markers({
-  map,
-  storeDatas,
-  setCurrentStore,
-}: MarkerProps) {
-  const loadKakaMarkers = useCallback(() => {
-    console.log("ed>>", storeDatas);
+export default function Markers({ storeDatas }: MarkerProps) {
+  const map = useRecoilValue(mapState);
+  const setCurrentStore = useSetRecoilState(currentStoreState);
+  const [location, setLocation] = useRecoilState(locationState);
 
+  const loadKakaMarkers = useCallback(() => {
     if (map) {
       storeDatas.map((store: any) => {
         const imageSrc = store?.category
@@ -60,10 +58,15 @@ export default function Markers({
         // 선택된 가게 저장
         window.kakao.maps.event.addListener(marker, "click", function () {
           setCurrentStore(store);
+          setLocation({
+            ...location,
+            lat: store.lat,
+            lng: store.lng,
+          });
         });
       });
     }
-  }, [map, setCurrentStore, storeDatas]);
+  }, [map]);
 
   useEffect(() => {
     loadKakaMarkers();

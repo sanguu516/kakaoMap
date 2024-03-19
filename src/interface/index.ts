@@ -16,3 +16,14 @@ export interface StoreApiResponse {
   totalPage?: number;
   totalCount?: number;
 }
+
+export interface LocationType {
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
+export interface SearchType {
+  q?: string;
+  district?: string;
+}
