@@ -9,3 +9,22 @@ export const DISTRICT_ARR = [
   "금천구",
   "노원구",
 ];
+
+export const CATECORY_ARR = [
+  "한식",
+  "중식",
+  "일식",
+  "양식",
+  "분식",
+  "카페",
+  "기타",
+];
+
+export const FOOD_CERTIFY_ARR = [
+  "채식가능음식점",
+  "채식음식점",
+  "저염실천음식점",
+  "식생활체험공간",
+  "농부시장",
+  "친환경유기농식품판매점",
+];
