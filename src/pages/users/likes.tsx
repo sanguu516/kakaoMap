@@ -1,3 +1,3 @@
 export default function LikesPage() {
-  return;
+  return <div>LikesPage</div>;
 }

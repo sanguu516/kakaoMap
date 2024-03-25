@@ -11,6 +11,7 @@ import { StoreType } from "@/interface";
 import { useRouter } from "next/router";
 import { currentStoreState } from "@/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import Like from "./Like";
 interface StoreBoxProps {
   store: StoreType | null;
   setStore: Dispatch<SetStateAction<any>>;
@@ -47,9 +48,12 @@ export default function StoreBox() {
                 <AiOutlineClose size={20} />
               </button>
             </div>
-            <div className="mt-4 flex gap-2 items-center">
-              <HiOutlineMapPin />
-              {store?.address}
+            <div className="flex justify-between gap-4">
+              <div className="mt-4 flex gap-2 items-center col-span-3">
+                <HiOutlineMapPin />
+                {store?.address}
+              </div>
+              <Like />
             </div>
             <div className="mt-2 flex gap-2 items-center">
               <AiOutlinePhone />

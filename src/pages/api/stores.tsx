@@ -1,12 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { StoreApiResponse, StoreType } from "@/interface";
 import { PrismaClient, Store } from "@prisma/client";
+import axios from "axios";
 
 interface ResponeseType {
   page?: string;
   limit?: string;
   q?: string;
   district?: string;
+  id?: string;
 }
 
 export default async function handler(
@@ -32,6 +34,36 @@ export default async function handler(
     });
     console.log(data);
     return res.status(200).json(data);
+  } else if (req.method === "PUT") {
+    //데이터 수정 처리
+
+    const formData = req.body;
+
+    const headers = {
+      Authorization: `KakaoAK ${process.env.KAKAO_CLIENT_ID}`,
+    };
+    const { data } = await axios.get(
+      `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURI(
+        formData.address
+      )}`,
+      { headers }
+    );
+
+    const result = await prisma.store.update({
+      where: { id: formData.id },
+      data: { ...formData, lat: data.documents[0].x, lng: data.documents[1].y },
+    });
+
+    return res.status(200).json(result);
+  } else if (req.method === "DELETE") {
+    const { id }: { id?: string } = req.query;
+
+    if (id) {
+      const result = await prisma.store.delete({
+        where: { id: parseInt(id) },
+      });
+      return res.status(200).json(result);
+    }
   } else {
     if (page) {
       const skipPage = parseInt(page) - 1;
